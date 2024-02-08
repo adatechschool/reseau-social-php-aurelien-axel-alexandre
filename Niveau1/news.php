@@ -35,7 +35,7 @@
             </aside>
             <main>
                 <!-- L'article qui suit est un exemple pour la présentation et
-                  @todo: doit etre retiré -->
+                @todo: doit etre retiré -->
                 <article>
                     <h3>
                         <time datetime='2020-02-01 11:12:13' >31 février 2010 à 11h12</time>
@@ -54,7 +54,6 @@
                         <a href="">#piscitur</a>,
                     </footer>
                 </article>
-
                 <?php
                 /*
                   // C'est ici que le travail PHP commence
@@ -95,6 +94,7 @@
                     ORDER BY posts.created DESC
                     LIMIT 5
                     ";
+
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 // Vérification
                 if ( ! $lesInformations)
@@ -128,18 +128,14 @@
                             <p><?php echo $post['content'] ?></p>
                         </div>
                         <footer>
-                            <small><?php echo '♥' . $post['like_number'] ?>  </small>
+                            <small><?php echo '♥' . $post['like_number'] ?></small>
 
-
-                                                            <?php
+                            <?php
                                 $tags = explode(',', $post['taglist']);
                                 foreach ($tags as $tag) {
                                     echo '<a href="#">#' . trim($tag) . '</a> ';
                                 }
-                                ?>
-
-
-
+                            ?>
                         </footer>
                     </article>
                     <?php
