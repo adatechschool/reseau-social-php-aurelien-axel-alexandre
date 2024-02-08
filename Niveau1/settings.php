@@ -2,8 +2,8 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <title>ReSoC - Paramètres</title> 
-        <meta name="author" content="Julien Falconnet">
+        <title>ReSoC - Paramètres</title>
+        <meta name="author" content="TripleA">
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
@@ -57,15 +57,15 @@
                  * Etape 3: récupérer le nom de l'utilisateur
                  */
                 $laQuestionEnSql = "
-                    SELECT users.*, 
-                    count(DISTINCT posts.id) as totalpost, 
-                    count(DISTINCT given.post_id) as totalgiven, 
-                    count(DISTINCT recieved.user_id) as totalrecieved 
-                    FROM users 
-                    LEFT JOIN posts ON posts.user_id=users.id 
-                    LEFT JOIN likes as given ON given.user_id=users.id 
-                    LEFT JOIN likes as recieved ON recieved.post_id=posts.id 
-                    WHERE users.id = '$userId' 
+                    SELECT users.*,
+                    count(DISTINCT posts.id) as totalpost,
+                    count(DISTINCT given.post_id) as totalgiven,
+                    count(DISTINCT recieved.user_id) as totalrecieved
+                    FROM users
+                    LEFT JOIN posts ON posts.user_id=users.id
+                    LEFT JOIN likes as given ON given.user_id=users.id
+                    LEFT JOIN likes as recieved ON recieved.post_id=posts.id
+                    WHERE users.id = '$userId'
                     GROUP BY users.id
                     ";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
@@ -80,7 +80,7 @@
                  */
                 //@todo: afficher le résultat de la ligne ci dessous, remplacer les valeurs ci-après puiseffacer la ligne ci-dessous
                 echo "<pre>" . print_r($user, 1) . "</pre>";
-                ?>                
+                ?>
                 <article class='parameters'>
                     <h3>Mes paramètres</h3>
                     <dl>

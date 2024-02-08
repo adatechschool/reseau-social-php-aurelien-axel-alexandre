@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>ReSoC - Administration</title>
-        <meta name="author" content="Julien Falconnet">
+        <meta name="author" content="TripleA">
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
@@ -25,21 +25,14 @@
 
             </nav>
         </header>
-
         <?php
-        /**
+        /*
          * Etape 1: Ouvrir une connexion avec la base de donnée.
          */
-
-
-
-
-
-
         // on va en avoir besoin pour la suite
         //$mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
         //trouvé =
-        $mysqli = mysqli_connect("localhost", "root", "root", "socialnetwork");
+        $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
         //verification
         if ($mysqli->connect_errno)
         {
@@ -65,17 +58,17 @@
 
                 /*
                  * Etape 3 : @todo : Afficher les mots clés en s'inspirant de ce qui a été fait dans news.php
-                 * Attention à en pas oublier de modifier tag_id=321 avec l'id du mot dans le lien
+                 * Attention à ne pas oublier de modifier tag_id=321 avec l'id du mot dans le lien
                  */
                 while ($tag = $lesInformations->fetch_assoc())
                 {
-                    echo "<pre>" . print_r($tag, 1) . "</pre>";
+                    // echo "<pre>" . print_r($tag, 1) . "</pre>";
                     ?>
                     <article>
-                        <h3>#chaussette</h3>
-                        <p>id:321</p>
-                        <nav>
-                            <a href="tags.php?tag_id=321">Messages</a>
+                        <h3><?php echo $tag['label'] ?></h3>
+                        <p><?php echo "id: " . $tag['id'] ?></p>
+                        <nav>id
+                            <a href="tags.php?tag_id=<?php echo $tag['id']; ?>">Messages</a>
                         </nav>
                     </article>
                 <?php } ?>
@@ -98,21 +91,21 @@
 
                 /*
                  * Etape 5 : @todo : Afficher les utilisatrices en s'inspirant de ce qui a été fait dans news.php
-                 * Attention à en pas oublier de modifier dans le lien les "user_id=123" avec l'id de l'utilisatrice
+                 * Attention à ne pas oublier de modifier dans le lien les "user_id=123" avec l'id de l'utilisatrice
                  */
-                while ($tag = $lesInformations->fetch_assoc())
+                while ($users = $lesInformations->fetch_assoc())
                 {
-                    echo "<pre>" . print_r($tag, 1) . "</pre>";
+                    // echo "<pre>" . print_r($tag, 1) . "</pre>";
                     ?>
                     <article>
-                        <h3>Alexandra</h3>
-                        <p>id:123</p>
+                        <h3><?php echo $users['alias'] ?></h3>
+                        <p><?php echo "id: " . $users["id"] ?></p>
                         <nav>
-                            <a href="wall.php?user_id=123">Mur</a>
-                            | <a href="feed.php?user_id=123">Flux</a>
-                            | <a href="settings.php?user_id=123">Paramètres</a>
-                            | <a href="followers.php?user_id=123">Suiveurs</a>
-                            | <a href="subscriptions.php?user_id=123">Abonnements</a>
+                            <a href="wall.php?user_id=<?php echo $users['id']; ?>">Mur</a>
+                            | <a href="feed.php?user_id=<?php echo $users['id']; ?>">Flux</a>
+                            | <a href="settings.php?user_id=<?php echo $users['id']; ?>">Paramètres</a>
+                            | <a href="followers.php?user_id=<?php echo $users['id']; ?>">Suiveurs</a>
+                            | <a href="subscriptions.php?user_id=<?php echo $users['id']; ?>">Abonnements</a>
                         </nav>
                     </article>
                 <?php } ?>
