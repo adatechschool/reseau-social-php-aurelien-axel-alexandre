@@ -25,7 +25,6 @@
     $mysqli = connectDB('localhost', 'root', 'root', 'socialnetwork');
 
 
-
     // Etape 3: récupérer id et nom de l'utilisateur
     $laQuestionEnSqlUser = "SELECT * FROM users WHERE id= '$userId' ";
     $lesInformationsUser = $mysqli->query($laQuestionEnSqlUser);
