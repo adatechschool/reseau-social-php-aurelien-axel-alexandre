@@ -22,15 +22,10 @@
     /**
      * Etape 2: se connecter à la base de donnée
      */
-    $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
-    
-    if ($mysqli->connect_errno) {
-        echo "<article>";
-        echo ("Échec de la connexion : " . $mysqli->connect_error);
-        echo ("<p>Indice: Vérifiez les parametres de <code>new mysqli(...</code></p>");
-        echo "</article>";
-        exit();
-    }
+    //Récupérer la fonction
+    require_once 'functions.php';
+    //Call de la fonction
+    $mysqli = connectDB('localhost', 'root', 'root', 'socialnetwork');
 
     /**
      * Etape 3: récupérer le nom de l'utilisateur

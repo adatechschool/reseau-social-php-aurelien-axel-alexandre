@@ -20,15 +20,11 @@
     $tagId = intval($_GET['tag_id']);
 
     //Etape 2: se connecter à la base de donnée
-    $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
-    
-    if ($mysqli->connect_errno) {
-        echo "<article>";
-        echo ("Échec de la connexion : " . $mysqli->connect_error);
-        echo ("<p>Indice: Vérifiez les parametres de <code>new mysqli(...</code></p>");
-        echo "</article>";
-        exit();
-    }
+
+    //Récupérer la fonction
+    require_once 'functions.php';
+    //Call de la fonction
+    $mysqli = connectDB('localhost', 'root', 'root', 'socialnetwork');
 
     //Etape 3: récupérer tous les messages avec un mot clé donné
     $laQuestionEnSql = "
@@ -53,7 +49,7 @@
     /*
     echo "<pre>";
     print_r($lesInformations->fetch_all(MYSQLI_ASSOC));
-    echo "</pre>"; 
+    echo "</pre>";
     */
 
     // récupération du label du tag
@@ -65,7 +61,7 @@
     /*
     echo "<pre>";
     print_r($lesInformationsLabel->fetch_all(MYSQLI_ASSOC));
-    echo "</pre>"; 
+    echo "</pre>";
     */
 
     $labelTag = $lesInformationsLabel->fetch_assoc()['label'];
@@ -107,7 +103,7 @@
 
         <main>
             <?php
-            //Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php   
+            //Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
             while ($post = $lesInformations->fetch_assoc()) {
             ?>
                 <article>

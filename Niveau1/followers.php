@@ -11,19 +11,20 @@
 <body>
 
     <?php
+
+
+
     // Etape 1: récupérer l'id de l'utilisateur
     $userId = intval($_GET['user_id']);
 
-    // Etape 2: se connecter à la base de donnée
-    $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
+    // // Etape 2: se connecter à la base de donnée
 
-    if ($mysqli->connect_errno) {
-        echo "<article>";
-        echo ("Échec de la connexion : " . $mysqli->connect_error);
-        echo ("<p>Indice: Vérifiez les parametres de <code>new mysqli(...</code></p>");
-        echo "</article>";
-        exit();
-    }
+    //Récupérer la fonction
+    require_once 'functions.php';
+    //Call de la fonction
+    $mysqli = connectDB('localhost', 'root', 'root', 'socialnetwork');
+
+
 
     // Etape 3: récupérer id et nom de l'utilisateur
     $laQuestionEnSqlUser = "SELECT * FROM users WHERE id= '$userId' ";
@@ -37,7 +38,7 @@
                 SELECT users.*
                 FROM followers
                 LEFT JOIN users ON users.id = followers.following_user_id
-                WHERE followers.followed_user_id = '$userId'    
+                WHERE followers.followed_user_id = '$userId'
                 GROUP BY users.id
                 ";
 
@@ -83,7 +84,7 @@
         <main class='contacts'>
             <?php
             // Etape 4: à vous de jouer
-                //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
+                //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous
             if ($lesInformationsFollowers->num_rows >  0) {
                 while ($row = $lesInformationsFollowers->fetch_assoc()) {
                     echo '<article>';
