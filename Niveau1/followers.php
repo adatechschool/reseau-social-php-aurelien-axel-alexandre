@@ -12,16 +12,12 @@
 
     <?php
 
-
-
-    // Etape 1: récupérer l'id de l'utilisateur
+    // récupéreration de l'id utilisateur dans l'URL
     $userId = intval($_GET['user_id']);
-
-    // // Etape 2: se connecter à la base de donnée
 
     //Récupérer la fonction
     require_once 'functions.php';
-    //Call de la fonction
+    //Connexion BDD
     $mysqli = connectDB('localhost', 'root', 'root', 'socialnetwork');
 
 
@@ -48,26 +44,13 @@
     print_r($lesInformationsFollowers->fetch_all(MYSQLI_ASSOC));
     echo "</pre>";
     */
+
+    // Construction Header
+    require_once 'functions.php';
+    drawHeader($user)
     ?>
 
-    <header>
-        <img src="resoc.jpg" alt="Logo de notre réseau social" />
-        <nav id="menu">
-            <a href="news.php">Actualités</a>
-            <a href="wall.php?user_id=<?php echo $user['id'] ?>">Mur</a>
-            <a href="feed.php?user_id=<?php echo $user['id'] ?>">Flux</a>
-            <a href="tags.php?tag_id=1">Mots-clés</a>
-        </nav>
-        <nav id="user">
-            <a href="#">Profil</a>
-            <ul>
-                <li><a href="settings.php?user_id=<?php echo $user['id'] ?>">Paramètres</a></li>
-                <li><a href="followers.php?user_id=<?php echo $user['id'] ?>">Mes suiveurs</a></li>
-                <li><a href="subscriptions.php?user_id=<?php echo $user['id'] ?>">Mes abonnements</a></li>
-            </ul>
 
-        </nav>
-    </header>
 
     <div id="wrapper">
         <aside>
@@ -80,21 +63,12 @@
             </section>
         </aside>
 
-        <main class='contacts'>
-            <?php
-            // Etape 4: à vous de jouer
-                //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous
-            if ($lesInformationsFollowers->num_rows >  0) {
-                while ($row = $lesInformationsFollowers->fetch_assoc()) {
-                    echo '<article>';
-                    echo '<img src="user.jpg" alt="blason"/>';
-                    echo '<h3>' . htmlspecialchars($row['alias']) . '</h3>';
-                    echo '<p>id:' . htmlspecialchars($row['id']) . '</p>';
-                    echo '</article>';
-                }
-            }
-            ?>
-        </main>
+        <!-- Construction Contact :  -->
+        <?php
+        require_once 'functions.php';
+        drawContact($lesInformationsFollowers);
+        ?>
+
     </div>
 </body>
 

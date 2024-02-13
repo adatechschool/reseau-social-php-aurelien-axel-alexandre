@@ -10,35 +10,25 @@
 
 <body>
     <?php
-    /**
-     * Cette page est TRES similaire à wall.php.
-     * Vous avez sensiblement à y faire la meme chose.
-     * Il y a un seul point qui change c'est la requete sql.
-     */
-    /**
-     * Etape 1: Le mur concerne un utilisateur en particulier
-     */
+
+    // récupéreration de l'id utilisateur dans l'URL
     $userId = intval($_GET['user_id']);
     ?>
     <?php
-    /*
-    * Etape 2: se connecter à la base de donnée
-    */
-    //Récupérer la fonction
+
+    //Recup Fonction
     require_once 'functions.php';
-    //Call de la fonction
+    //Connexion BDD
     $mysqli = connectDB('localhost', 'root', 'root', 'socialnetwork');
 
-    //Etape 3: récupérer le nom de l'utilisateur
+    // Fetching user data from database
     $laQuestionEnSqlUser = "SELECT * FROM users WHERE id= '$userId' ";
     $lesInformationsUser = $mysqli->query($laQuestionEnSqlUser);
     $user = $lesInformationsUser->fetch_assoc();
 
     //echo "<pre>" . print_r($user, 1) . "</pre>";
 
-    /**
-     * Etape 3: récupérer tous les messages des abonnements
-     */
+    // Fetching messages data from database
     $laQuestionEnSqlMessage = "
                 SELECT posts.content,
                 posts.created,
@@ -63,13 +53,16 @@
     echo "</pre>";
     */
 
-    $messages = [];
 
+    // Storing messages in an array
+    $messages = [];
     while ($post = $lesInformationsMessage->fetch_assoc()) {
         $messages[] = $post;
     }
 
     $followersAlias = [];
+
+
 
     foreach ($messages as $post) {
         $followersAlias[] = $post['author_name'];
@@ -78,26 +71,12 @@
     $followersAlias = array_unique($followersAlias);
 
     $followersList = implode(', ', $followersAlias);
+
+    //Construction Header :
+    require_once 'functions.php';
+    drawHeader($user)
     ?>
 
-    <header>
-        <img src="resoc.jpg" alt="Logo de notre réseau social" />
-        <nav id="menu">
-            <a href="news.php">Actualités</a>
-            <a href="wall.php?user_id=<?php echo $user['id'] ?>">Mur</a>
-            <a href="feed.php?user_id=<?php echo $user['id'] ?>">Flux</a>
-            <a href="tags.php?tag_id=1">Mots-clés</a>
-        </nav>
-        <nav id="user">
-            <a href="#">Profil</a>
-            <ul>
-                <li><a href="settings.php?user_id=<?php echo $user['id'] ?>">Paramètres</a></li>
-                <li><a href="followers.php?user_id=<?php echo $user['id'] ?>">Mes suiveurs</a></li>
-                <li><a href="subscriptions.php?user_id=<?php echo $user['id'] ?>">Mes abonnements</a></li>
-            </ul>
-
-        </nav>
-    </header>
 
     <div id="wrapper">
         <aside>
@@ -115,34 +94,11 @@
 
         <main>
             <?php
-            /**
-             * Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
-             * A vous de retrouver comment faire la boucle while de parcours...
-             */
-            foreach ($messages as $post) {
-            ?>
-                <article>
-                    <h3>
-                        <time><?php echo $post['created'] ?></time>
-                    </h3>
-                    <address><?php echo 'par ' . $post['author_name'] ?></address>
-                    <div>
-                        <p><?php echo $post['content'] ?></p>
-                    </div>
-                    <footer>
-                        <small><?php echo '♥' . $post['like_number'] ?></small>
 
-                        <?php
-                        $tags = explode(',', $post['taglist']);
-                        foreach ($tags as $tag) {
-                            echo '<a href="#">#' . trim($tag) . '</a> ';
-                        }
-                        ?>
-                    </footer>
-                </article>
-            <?php
-            }
-            // et de pas oublier de fermer ici vote while
+            // Creation des articles
+            require_once 'functions.php';
+            createArticle($messages, $post);
+
             ?>
         </main>
     </div>

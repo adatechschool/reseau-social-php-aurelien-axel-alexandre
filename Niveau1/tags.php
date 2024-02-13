@@ -10,23 +10,16 @@
 
 <body>
     <?php
-    /**
-     * Cette page est similaire à wall.php ou feed.php
-     * mais elle porte sur les mots-clés (tags)
-     */
-    /**
-     * Etape 1: Le mur concerne un mot-clé en particulier
-     */
-    $tagId = intval($_GET['tag_id']);
 
-    //Etape 2: se connecter à la base de donnée
+    // récupéreration de l'id utilisateur dans l'URL
+    $tagId = intval($_GET['tag_id']);
 
     //Récupérer la fonction
     require_once 'functions.php';
-    //Call de la fonction
+    //Call BDD
     $mysqli = connectDB('localhost', 'root', 'root', 'socialnetwork');
 
-    //Etape 3: récupérer tous les messages avec un mot clé donné
+    // Fetching messages data from database
     $laQuestionEnSql = "
                 SELECT posts.content,
                 posts.created,
@@ -65,26 +58,13 @@
     */
 
     $labelTag = $lesInformationsLabel->fetch_assoc()['label'];
+
+        //construction du Header
+        require_once 'functions.php';
+        drawHeader($user)
     ?>
 
-    <header>
-        <img src="resoc.jpg" alt="Logo de notre réseau social" />
-        <nav id="menu">
-            <a href="news.php">Actualités</a>
-            <a href="wall.php?user_id=<?php echo $user['id'] ?>">Mur</a>
-            <a href="feed.php?user_id=<?php echo $user['id'] ?>">Flux</a>
-            <a href="tags.php?tag_id=1">Mots-clés</a>
-        </nav>
-        <nav id="user">
-            <a href="#">Profil</a>
-            <ul>
-                <li><a href="settings.php?user_id=<?php echo $user['id'] ?>">Paramètres</a></li>
-                <li><a href="followers.php?user_id=<?php echo $user['id'] ?>">Mes suiveurs</a></li>
-                <li><a href="subscriptions.php?user_id=<?php echo $user['id'] ?>">Mes abonnements</a></li>
-            </ul>
 
-        </nav>
-    </header>
 
     <div id="wrapper">
 
@@ -103,30 +83,8 @@
 
         <main>
             <?php
-            //Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
-            while ($post = $lesInformations->fetch_assoc()) {
-            ?>
-                <article>
-                    <h3>
-                        <time><?php echo $post['created'] ?></time>
-                    </h3>
-                    <address><?php echo 'par ' . $post['author_name'] ?></address>
-                    <div>
-                        <p><?php echo $post['content'] ?></p>
-                    </div>
-                    <footer>
-                        <small><?php echo '♥' . $post['like_number'] ?></small>
-
-                        <?php
-                        $tags = explode(',', $post['taglist']);
-                        foreach ($tags as $tag) {
-                            echo '<a href="#">#' . trim($tag) . '</a> ';
-                        }
-                        ?>
-                    </footer>
-                </article>
-            <?php
-            }
+                require_once 'functions.php';
+                createArticle2($post, $lesInformations);
             ?>
         </main>
     </div>
