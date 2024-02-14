@@ -7,7 +7,7 @@ session_start();
         <meta charset="utf-8">
         <title>Andouillettes - Connexion</title> 
         <meta name="author" content="Triple A">
-        <link rel="stylesheet" href="login.css"/>
+        <link rel="stylesheet" href="sign_up.css"/>
         <link rel="shortcut icon" href="https://studioavenir.fr/wp-content/uploads/2019/04/logo_v4.jpg" type="image/jpg">
     </head>
     <body>
@@ -71,13 +71,13 @@ session_start();
                         }
                     }
                     ?>                     
-                    <form action="login.php" method="post">
+                    <form action="feed.php" method="post">
                         <!-- <input type='hidden' name='???' value='achanger'> -->
                         <dl>
                             <dt><label for='email'>E-Mail</label></dt>
-                            <dd><input type='email'name='email'></dd>
+                            <dd><input type='email'name='email' placeholder="triplea@email.com"></dd>
                             <dt><label for='motpasse'>Mot de passe</label></dt>
-                            <dd><input type='password'name='motpasse'></dd>
+                            <dd><input type='password'name='motpasse' placeholder="TripleA"></dd>
                         </dl>
                         <input id="submit" type='submit'>
                     </form>
