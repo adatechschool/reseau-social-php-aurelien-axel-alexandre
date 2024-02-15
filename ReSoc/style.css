@@ -96,7 +96,10 @@ header img{
     box-shadow: 5px 5px 5px rgb(72, 72, 72);
 } */
 
-
+a:-webkit-any-link {
+    color: black;
+    text-decoration: none;
+}
 
 
 
