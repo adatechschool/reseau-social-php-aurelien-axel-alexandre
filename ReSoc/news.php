@@ -1,3 +1,5 @@
+<?php require_once 'sessionAdministrator.php'; ?>
+
 <!doctype html>
 <html lang="fr">
 

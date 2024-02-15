@@ -90,6 +90,7 @@ function drawHeader($user)
         <li><a href="settings.php?user_id=<?php echo $user['id']; ?>">Paramètres</a></li>
         <li><a href="followers.php?user_id=<?php echo $user['id']; ?>">Mes suiveurs</a></li>
         <li><a href="subscriptions.php?user_id=<?php echo $user['id']; ?>">Mes abonnements</a></li>
+        <li><a href="?logout">Déconnexion</a></li>
       </ul>
 
     </nav>

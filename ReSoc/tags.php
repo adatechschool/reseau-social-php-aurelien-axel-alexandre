@@ -1,3 +1,5 @@
+<?php require_once 'sessionAdministrator.php'; ?>
+
 <!doctype html>
 <html lang="fr">
 
@@ -79,6 +81,16 @@
                 </p>
 
             </section>
+
+            <h3>Tags</h3>
+        <ul>
+            <?php 
+            // Requête pour récupérer tous les tags
+            $queryTags = $mysqli->query("SELECT * FROM tags");
+            while ($tag = $queryTags->fetch_assoc()) {
+                echo "<li><a href=\"tags.php?tag_id={$tag['id']}\">{$tag['label']}</a></li>";
+            }
+            ?>
         </aside>
 
         <main>
