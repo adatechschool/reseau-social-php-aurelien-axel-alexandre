@@ -1,3 +1,5 @@
+<?php require_once 'sessionAdministrator.php'; ?>
+
 <!doctype html>
 <html lang="fr">
 
@@ -13,7 +15,7 @@
     <?php
 
     // récupéreration de l'id utilisateur dans l'URL
-    $userId = intval($_GET['user_id']);
+    //$userId = intval($_GET['user_id']);
 
     //Récupérer la fonction
     require_once 'functions.php';

@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -60,18 +57,23 @@ session_start();
                         $user = $res->fetch_assoc();
                         if ( ! $user OR $user["password"] != $passwdAVerifier)
                         {
-                            echo "La connexion a échouée. ";
-                            
+                            echo "La connexion a échouée. "; 
                         } else
                         {
-                            echo "Votre connexion est un succès : " . $user['alias'] . ".";
                             //! Etape 7 : Se souvenir que l'utilisateur s'est connecté pour la suite
                             // documentation: https://www.php.net/manual/fr/session.examples.basic.php
+                            
+                            session_start();
                             $_SESSION['connected_id']=$user['id'];
+                            //echo "<pre>" . print_r( $_SESSION['connected_id'], 1) . "</pre>";
+                            header('Location: feed.php?user_id=' . $user['id']);
+                            exit();
+                            
+                            echo "Votre connexion est un succès : " . $user['alias'] . ".";
                         }
                     }
                     ?>                     
-                    <form action="feed.php" method="post">
+                    <form action="login.php" method="post">
                         <!-- <input type='hidden' name='???' value='achanger'> -->
                         <dl>
                             <dt><label for='email'>E-Mail</label></dt>

@@ -27,8 +27,11 @@
                 // Etape 1 : vérifier si on est en train d'afficher ou de traiter le formulaire
                 // si on recoit un champs email rempli il y a une chance que ce soit un traitement
 
+                $enCoursDeTraitementPseudo = isset($_POST['pseudo']);
+                $enCoursDeTraitementEmail = isset($_POST['email']);
+                $enCoursDeTraitementPass = isset($_POST['motpasse']);
 
-                if (isset($_POST['pseudo'], $_POST['email'], $_POST['motpasse'])) {
+                if ($enCoursDeTraitementPseudo && $enCoursDeTraitementEmail && $enCoursDeTraitementPass) {
                     //echo "<pre>" . "Tout le champs sont OK, La connection est OK" . "<pre>";
                     // on ne fait ce qui suit que si un formulaire a été soumis.
 
@@ -39,6 +42,7 @@
                     $new_email = $_POST['email'];
                     $new_alias = $_POST['pseudo'];
                     $new_passwd = $_POST['motpasse'];
+
 
                     //Etape 3 : Ouvrir une connexion avec la base de donnée.
                     $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
@@ -66,13 +70,19 @@
                     if (!$ok) {
                         echo "L'inscription a échouée : " . $mysqli->error;
                     } else {
+                        session_start();
+                            $_SESSION['connected_id']=$user['id'];
+                            header('Location: feed.php?user_id=' . $user['id']);
+                            exit();
+
+
                         echo "Votre inscription est un succès : " . $new_alias;
                         echo " <a href='login.php'>Connectez-vous.</a>";
                     }
                 }
                 ?>
-                <form action="login.php" method="post">
-                    <input type='hidden' name='???' value='achanger'>
+                <form action="registration.php" method="post">
+                    <input type='hidden' name='action' value='achanger'>
                     <dl>
                         <dt><label for='pseudo'>Pseudo</label></dt>
                         <dd><input type='text' name='pseudo' placeholder="TripleA" required></dd>
